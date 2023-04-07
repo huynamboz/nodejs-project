@@ -1,5 +1,5 @@
 function validate(val,res, next){
-	const regex =  /^[a-zA-Z0-9\u00C0-\u1EF9\u1EA0-\u1EF1\u0300-\u036f\.,\-_\s']+$/;
+	const regex =  /^[a-zA-Z0-9\u00C0-\u1EF9\u1EA0-\u1EF1\u0300-\u036f~`!@#$%^&*()_+=\-{}\[\]\|:;"'<>,\.\?\/\\]+$/;
 	if(val.fullname == undefined || val.fullname == "" || regex.test(val.fullname)){
 		return res.status(400).send("fullname is not valid :3")
 	} 
