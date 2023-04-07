@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
+const validate = require('./middleware/validate')
 const port = 3001
 let data = [
 	{
@@ -16,10 +17,12 @@ let data = [
 		"age": 15
 	}
 ]
+
 app.use(bodyParser.json())
 app.get('/user', (req, res) => {
   res.send(data)
 })
+
 app.get('/user/:id', (req, res) => {
 	const id = req.params.id
 	const result = data.find(item => item.id === parseInt(id))
@@ -29,10 +32,9 @@ app.get('/user/:id', (req, res) => {
 	  res.send(result)
 	}
   })
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`)
-// })
-app.put('/user/:id', (req, res) => {
+app.put('/user/:id', (req,res,next) =>{
+	validate(req.body,res,next);
+},(req, res) => {
 	const id = req.params.id
 	const index = data.findIndex(item => item.id === parseInt(id))
 	if (index === -1) {
@@ -44,7 +46,7 @@ app.put('/user/:id', (req, res) => {
 	  res.send(data[index])
 	}
   })
-app.post('/user', (req, res) => {
+app.post('/user',(req,res,next) =>{ validate(req.body,res,next) } ,(req, res) => {
 	const user = {
 			id : data[data.length - 1].id + 1,
 			fullname : req.body.fullname,
