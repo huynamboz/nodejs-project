@@ -1,3 +1,1 @@
 # nodejs-project
-server to test 
-get user : http://103.116.53.105:3001/user <br> other ...
