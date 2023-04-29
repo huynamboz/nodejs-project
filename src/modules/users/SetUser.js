@@ -1,15 +1,14 @@
-const connection = require('../../../database/connection')
+const connection = require('../../database/connection')
 const {getAllUsers} = require('./GetUser') 
-function updateUser(req, res){
+function updateUser(req, res, id){
 	return new Promise((resolve,reject)=>
 	{
-		const id = req.params.id
-	connection.query(`select * from users where id = ?`,[id],(error,result) =>{
+		connection.query(`select * from user where id = ?`,[id],(error,result) =>{
 		console.log(error,result);
 		if (result.length == 0) {
-			res.status(404).send('Record not found')
+			reject("Not have user")
 		} else {
-			connection.query(`update users set name = ?,age = ? where id = 1`,[req.body.name,req.body.age],
+			connection.query(`update users set name = ?,age = ? where id = ?`,[req.body.name,req.body.phone_number,id],
 			(error,result)=>{
 				if (error) {
 					console.log("Error updating user:", error);

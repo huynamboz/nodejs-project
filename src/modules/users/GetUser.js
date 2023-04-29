@@ -1,4 +1,4 @@
-const connection = require('../../../database/connection')
+const connection = require('../../database/connection')
 async function getAllUsers() {
 	return new Promise((resolve, reject) => {
 		connection.query('SELECT * FROM users', (error, results, fields) => {
